@@ -91,14 +91,14 @@ int main(void)
   MX_DAC_Init();
   /* USER CODE BEGIN 2 */
   printf("DAC Testing compile date: %s %s\r\n", __DATE__, __TIME__);
-  uint8_t value = 78;
-  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_8B_R, value);
+  uint16_t value = 0x0800;
+  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value);
   if (HAL_DAC_Start(&hdac, DAC_CHANNEL_1) != HAL_OK)
   {
     /* Start Error */
     Error_Handler();
   }
-  printf("value = %d, voltage = %dmV\r\n", value, (uint16_t)(value*3.3f*1000/255));
+  printf("value = %d, voltage = %.1fmV\r\n", value, (value*3.3f*1000/0x0FFF));
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,8 +113,8 @@ int main(void)
       {
         while (HAL_GPIO_ReadPin(KEY0_GPIO_Port, KEY0_Pin) == SET);
         value--;
-        printf("value = %d, voltage = %dmV\r\n", value, (uint16_t)(value*3.3f*1000/255));
-        HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_8B_R, value);
+        printf("value = %d, voltage = %.1fmV\r\n", value, (value*3.3f*1000/0x0FFF));
+        HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value);
       }
       HAL_Delay(10);
     }
@@ -125,8 +125,8 @@ int main(void)
       {
         while (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port, KEY_UP_Pin) == SET);
         value++;
-        printf("value = %d, voltage = %dmV\r\n", value, (uint16_t)(value*3.3f*1000/255));
-        HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_8B_R, value);
+        printf("value = %d, voltage = %.1fmV\r\n", value, (value*3.3f*1000/0x0FFF));
+        HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value);
       }
       HAL_Delay(10);
     }
