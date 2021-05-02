@@ -131,7 +131,6 @@ PROJECT_PROJ.XSD
 
 cmake-build-debug/
 cmake-build-release/
-.cproject
 .mxproject
 .project
 .idea/
